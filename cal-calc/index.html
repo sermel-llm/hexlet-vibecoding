@@ -34,6 +34,11 @@ try { if (localStorage.getItem('theme') === 'dark') document.documentElement.dat
   color-scheme:dark;
 }
 *{box-sizing:border-box}
+/* Плавная смена цветов: класс включается только на время переключения темы */
+.theme-anim, .theme-anim *, .theme-anim *::before, .theme-anim *::after{
+  transition:background-color .5s ease, color .5s ease, border-color .5s ease, box-shadow .5s ease, fill .5s ease, stroke .5s ease !important;
+}
+@media (prefers-reduced-motion:reduce){.theme-anim, .theme-anim *{transition:none !important}}
 .top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
 .icon-btn{flex:none;width:40px;height:40px;display:grid;place-items:center;border:1px solid var(--border);border-radius:8px;background:var(--background);color:var(--foreground);cursor:pointer;transition:background .15s}
 .icon-btn:hover{background:var(--muted)}
@@ -191,6 +196,9 @@ function setThemeLabel() {
 $('themeBtn').addEventListener('click', () => {
   const root = document.documentElement;
   const dark = root.dataset.theme !== 'dark';
+  root.classList.add('theme-anim');
+  clearTimeout(window.themeAnimTimer);
+  window.themeAnimTimer = setTimeout(() => root.classList.remove('theme-anim'), 600);
   if (dark) root.dataset.theme = 'dark'; else delete root.dataset.theme;
   try { localStorage.setItem('theme', dark ? 'dark' : 'light'); } catch (e) {}
   setThemeLabel();
