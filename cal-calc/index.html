@@ -38,14 +38,15 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
 .tabs button:hover{color:var(--foreground)}
 .tabs button.on{background:var(--background);color:var(--foreground);box-shadow:0 1px 3px rgba(0,0,0,.1)}
 .tabs button:focus-visible{outline:2px solid var(--ring);outline-offset:1px}
-.err{color:var(--destructive);font-size:13px;min-height:20px;margin-top:12px}
+.err{color:var(--destructive);font-size:13px;margin-top:12px}
+.err:empty{display:none}
 .big{font-size:44px;font-weight:700;letter-spacing:-.03em;color:var(--accent1);line-height:1.1}
 .big small{font-size:18px;font-weight:500;color:var(--muted-foreground);letter-spacing:0}
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:20px}
 .stat{border:1px solid var(--border);border-radius:8px;padding:12px}
 .stat span{display:block;font-size:12px;color:var(--muted-foreground)}
 .stat b{font-size:20px;font-weight:600}
-.badge{display:inline-block;margin-top:6px;padding:2px 10px;border-radius:999px;font-size:12px;font-weight:600}
+.badge{display:inline-block;font-style:normal;margin-top:6px;padding:2px 10px;border-radius:999px;font-size:12px;font-weight:600}
 .badge.ok{background:var(--accent1-bg);color:var(--accent1)}
 .badge.warn{background:var(--accent2-bg);color:var(--accent2)}
 .sep{height:1px;background:var(--border);margin:24px 0 16px}
