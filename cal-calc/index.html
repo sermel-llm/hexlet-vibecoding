@@ -42,7 +42,7 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
 .err:empty{display:none}
 .big{font-size:44px;font-weight:700;letter-spacing:-.03em;color:var(--accent1);line-height:1.1}
 .big small{font-size:18px;font-weight:500;color:var(--muted-foreground);letter-spacing:0}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:20px}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:20px}
 .stat{border:1px solid var(--border);border-radius:8px;padding:12px}
 .stat span{display:block;font-size:12px;color:var(--muted-foreground)}
 .stat b{font-size:20px;font-weight:600}
@@ -122,6 +122,7 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
         <div class="stat"><span>Индекс массы тела</span><b id="bmi">—</b><br><i class="badge ok" id="bmiTxt">—</i></div>
         <div class="stat"><span>Базовый обмен</span><b id="bmr">—</b></div>
         <div class="stat"><span>С учётом активности</span><b id="tdee">—</b></div>
+        <div class="stat"><span>Вода в день</span><b><span id="water">—</span> л</b><br><i class="badge ok">30 мл на кг веса</i></div>
       </div>
       <div class="sep"></div>
       <label>Белки, жиры, углеводы</label>
@@ -180,6 +181,8 @@ function calc() {
   $('bmr').textContent = Math.round(bmr).toLocaleString('ru');
   $('tdee').textContent = Math.round(tdee).toLocaleString('ru');
   $('bmi').textContent = bmi.toFixed(1);
+  // Вода: 30 мл на 1 кг веса, в литрах с одним знаком
+  $('water').textContent = (w * 30 / 1000).toLocaleString('ru', { maximumFractionDigits: 1 });
   $('bmiTxt').textContent = cat;
   $('bmiTxt').className = 'badge ' + (cat === 'норма' ? 'ok' : 'warn');
   $('p').textContent = p; $('f').textContent = f; $('c').textContent = c;
