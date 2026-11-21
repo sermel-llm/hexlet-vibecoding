@@ -7,6 +7,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script>
+// Применяем сохранённую тему до отрисовки, чтобы не было «вспышки» светлой темы
+try { if (localStorage.getItem('theme') === 'dark') document.documentElement.dataset.theme = 'dark'; } catch (e) {}
+</script>
 <style>
 :root{
   --background:#ffffff; --foreground:#09090b;
@@ -16,9 +20,29 @@
   --accent2:#ea580c; --accent2-bg:#fff7ed;
   --destructive:#dc2626;
   --radius:12px;
+  --page:#fafafa;
+  color-scheme:light;
+}
+:root[data-theme="dark"]{
+  --page:#09090b;
+  --background:#18181b; --foreground:#fafafa;
+  --muted:#27272a; --muted-foreground:#a1a1aa;
+  --border:#3f3f46; --ring:#71717a;
+  --accent1:#4ade80; --accent1-soft:#166534; --accent1-bg:#14532d;
+  --accent2:#fb923c; --accent2-bg:#431407;
+  --destructive:#f87171;
+  color-scheme:dark;
 }
 *{box-sizing:border-box}
-body{margin:0;background:#fafafa;color:var(--foreground);font:14px/1.5 Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding:32px 16px;-webkit-font-smoothing:antialiased}
+.top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.icon-btn{flex:none;width:40px;height:40px;display:grid;place-items:center;border:1px solid var(--border);border-radius:8px;background:var(--background);color:var(--foreground);cursor:pointer;transition:background .15s}
+.icon-btn:hover{background:var(--muted)}
+.icon-btn:focus-visible{outline:2px solid var(--ring);outline-offset:2px}
+.icon-btn svg{width:18px;height:18px}
+.icon-sun{display:none}
+:root[data-theme="dark"] .icon-sun{display:block}
+:root[data-theme="dark"] .icon-moon{display:none}
+body{margin:0;background:var(--page);color:var(--foreground);font:14px/1.5 Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding:32px 16px;-webkit-font-smoothing:antialiased}
 .wrap{max-width:680px;margin:0 auto}
 h1{margin:0;font-size:30px;font-weight:700;letter-spacing:-.025em}
 .lead{color:var(--muted-foreground);margin:6px 0 24px;font-size:15px}
@@ -71,7 +95,13 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
 </head>
 <body>
 <div class="wrap">
-  <h1>Калькулятор калорий</h1>
+  <div class="top">
+    <h1>Калькулятор калорий</h1>
+    <button class="icon-btn" id="themeBtn" type="button" title="Тёмная тема" aria-label="Тёмная тема">
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+    </button>
+  </div>
   <p class="lead">Индекс массы тела и дневная норма калорий по формуле Миффлина — Сан Жеора.</p>
 
   <div class="card">
@@ -147,6 +177,22 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
 <script>
 const $ = id => document.getElementById(id);
 const state = { sex: 'm', goal: 0 };
+
+// Переключатель темы: светлая по умолчанию, выбор запоминается в браузере
+function setThemeLabel() {
+  const dark = document.documentElement.dataset.theme === 'dark';
+  const txt = dark ? 'Светлая тема' : 'Тёмная тема';
+  $('themeBtn').title = txt;
+  $('themeBtn').setAttribute('aria-label', txt);
+}
+$('themeBtn').addEventListener('click', () => {
+  const root = document.documentElement;
+  const dark = root.dataset.theme !== 'dark';
+  if (dark) root.dataset.theme = 'dark'; else delete root.dataset.theme;
+  try { localStorage.setItem('theme', dark ? 'dark' : 'light'); } catch (e) {}
+  setThemeLabel();
+});
+setThemeLabel();
 
 document.querySelectorAll('.tabs').forEach(tabs => {
   tabs.addEventListener('click', e => {
