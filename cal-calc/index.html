@@ -190,7 +190,7 @@ function calc() {
   $('kcal').textContent = kcal.toLocaleString('ru');
   $('bmr').textContent = Math.round(bmr).toLocaleString('ru');
   $('tdee').textContent = Math.round(tdee).toLocaleString('ru');
-  $('bmi').textContent = bmi.toFixed(1);
+  $('bmi').textContent = bmi.toFixed(1).replace('.', ',');
   // Вода: 30 мл на 1 кг веса, в литрах с одним знаком
   $('water').textContent = (w * 30 / 1000).toLocaleString('ru', { maximumFractionDigits: 1 });
   $('bmiTxt').textContent = cat;
