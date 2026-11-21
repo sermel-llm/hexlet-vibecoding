@@ -44,7 +44,7 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
 .big small{font-size:18px;font-weight:500;color:var(--muted-foreground);letter-spacing:0}
 .stats{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:20px}
 .stat{border:1px solid var(--border);border-radius:8px;padding:12px}
-.stat span{display:block;font-size:12px;color:var(--muted-foreground)}
+.stat .label{display:block;font-size:12px;color:var(--muted-foreground)}
 .stat b{font-size:20px;font-weight:600}
 .badge{display:inline-block;font-style:normal;margin-top:6px;padding:2px 10px;border-radius:999px;font-size:12px;font-weight:600}
 .bmi-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
@@ -57,7 +57,7 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
 .macros{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px}
 .macro{display:flex;align-items:center;gap:8px}
 .dot{width:10px;height:10px;border-radius:50%;flex:none}
-.macro span{color:var(--muted-foreground);font-size:13px}
+.macro .label{display:block;color:var(--muted-foreground);font-size:13px}
 .macro b{display:block;font-size:16px;font-weight:600;color:var(--foreground)}
 .note{font-size:12px;color:var(--muted-foreground);margin:20px 0 0}
 #result{transition:opacity .15s}
@@ -122,10 +122,10 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
     <div class="card-content">
       <div class="big"><span id="kcal">—</span> <small>ккал / день</small></div>
       <div class="stats">
-        <div class="stat"><span>Индекс массы тела</span><div class="bmi-row"><b id="bmi">—</b><i class="badge ok" id="bmiTxt">—</i></div><p class="hint" id="bmiHint"></p></div>
-        <div class="stat"><span>Базовый обмен</span><b id="bmr">—</b></div>
-        <div class="stat"><span>С учётом активности</span><b id="tdee">—</b></div>
-        <div class="stat"><span>Вода в день</span><b><span id="water">—</span> л</b><br><i class="badge ok">30 мл на кг веса</i></div>
+        <div class="stat"><span class="label">Индекс массы тела</span><div class="bmi-row"><b id="bmi">—</b><i class="badge ok" id="bmiTxt">—</i></div><p class="hint" id="bmiHint"></p></div>
+        <div class="stat"><span class="label">Вода в день</span><b><span id="water">—</span> л</b><p class="hint">30 мл на 1 кг веса</p></div>
+        <div class="stat"><span class="label">Базовый обмен</span><b id="bmr">—</b></div>
+        <div class="stat"><span class="label">С учётом активности</span><b id="tdee">—</b></div>
       </div>
       <div class="sep"></div>
       <label>Белки, жиры, углеводы</label>
@@ -135,9 +135,9 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
         <div id="bc" style="background:var(--accent1-soft)"></div>
       </div>
       <div class="macros">
-        <div class="macro"><i class="dot" style="background:var(--accent1)"></i><div><span>Белки</span><b><span id="p">—</span> г</b></div></div>
-        <div class="macro"><i class="dot" style="background:var(--accent2)"></i><div><span>Жиры</span><b><span id="f">—</span> г</b></div></div>
-        <div class="macro"><i class="dot" style="background:var(--accent1-soft)"></i><div><span>Углеводы</span><b><span id="c">—</span> г</b></div></div>
+        <div class="macro"><i class="dot" style="background:var(--accent1)"></i><div><span class="label">Белки</span><b><span id="p">—</span> г</b></div></div>
+        <div class="macro"><i class="dot" style="background:var(--accent2)"></i><div><span class="label">Жиры</span><b><span id="f">—</span> г</b></div></div>
+        <div class="macro"><i class="dot" style="background:var(--accent1-soft)"></i><div><span class="label">Углеводы</span><b><span id="c">—</span> г</b></div></div>
       </div>
       <p class="note">Расчёт ориентировочный. При заболеваниях, беременности или спортивных целях проконсультируйтесь со специалистом.</p>
     </div>
